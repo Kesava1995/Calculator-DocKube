@@ -1,233 +1,170 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>CALCULATOR</title>
-  <link rel="stylesheet" href="boot1css.css">
+  <meta charset="UTF-8">
+  <title>GCD LCM Fractions Calculator</title>
   <style>
-    #calc {
-      background-color: orange;
-      padding: 10px;
-      color: darkblue;
-      border: 2px dashed goldenrod;
-      font-size: 40px;
-      font-family: Monotype Corsiva;
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
     }
-    #calc:hover {
-      background-color: pink;
-      border: 2px solid yellow;
+    .calculator {
+      background-color: #d3d3d3;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
-	#b1,#b2,#b3,#b4{font-size: 25px;
-	padding:5px;}
-    input[type="button"] {
-      padding: 10px;
-      margin: 5px;
-      color: white;
-      background-color: darkblue;
-      border: 1px solid goldenrod;
-      font-size: 30px;
-      font-family: Monotype Corsiva;
-      width: 70px;
+    .display {
+      width: 100%;
+      height: 40px;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      text-align: center;
     }
-    input[type="button"]:hover {
-      border: 1px solid yellow;
-      color: darkgreen;
-      background-color: goldenrod;
-    }
-    .col-md-6.col-sm-12 {
-      background-color: grey;
-    }
-    .calc-grid {
+    .buttons {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      justify-items: center;
-      background-color: lightgrey;
+      grid-template-columns: repeat(4, 60px);
+      grid-gap: 10px;
+    }
+    button {
+      height: 60px;
+      font-size: 1.2em;
+      background-color: darkblue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: navy;
     }
   </style>
 </head>
-<body class="container mt-5">
-  <div class="mb-4">
-    <a href="index.html">
-      <input type="button" value="⇐" class="btn btn-secondary">
-    </a>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-sm-12">
-      <center>
-        <form name="form1" class="text-center p-3 border rounded bg-light shadow-sm">
-          <input type="text" id="calc" name="answer" placeholder="Calculate" class="form-control text-center mb-3">
-          <div class="calc-grid">
-            <input type="button" value="1" onclick="form1.answer.value+=1">
-            <input type="button" value="2" onclick="form1.answer.value+=2">
-            <input type="button" value="3" onclick="form1.answer.value+=3">
-            <input type="button" id="b1" value="PUSH" onclick="GCDpush('calc')">
-            <input type="button" value="4" onclick="form1.answer.value+=4">
-            <input type="button" value="5" onclick="form1.answer.value+=5">
-            <input type="button" value="6" onclick="form1.answer.value+=6">
-            <input type="button" id="b2" value="GCD" onclick="display1()">
-            <input type="button" value="7" onclick="form1.answer.value+=7">
-            <input type="button" value="8" onclick="form1.answer.value+=8">
-            <input type="button" value="9" onclick="form1.answer.value+=9">
-            <input type="button" id="b3" value="LCM" onclick="display2()">
-            <input type="button" value="0" onclick="form1.answer.value+=0">
-            <input type="button" value="," onclick="form1.answer.value+=','">
-			<input type="button" value="/" onclick="form1.answer.value+='/'">
-            <input type="button" id="b4" value="Clear" onclick="clearAll()" class="btn btn-danger">
-			<div></div>
-          </div>
-        </form>
-      </center>
+<body>
+  <div class="calculator">
+    <input type="text" id="calc" class="display" readonly>
+    <div class="buttons">
+      <button onclick="clearAll()">C</button>
+      <button onclick="append(',')">,</button>
+	  <button onclick="append('/')">/</button>
+      <button onclick="GCDpush()">PUSH</button>
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+	  <button onclick="displayGCD()">GCD</button>
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+	  <button onclick="displayLCM()">LCM</button>
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button onclick="append('0')">0</button>
     </div>
   </div>
+
   <script>
-var arrn=new Array();
-var arrd=new Array(),i,j;
+    let arrn = [], arrd = [];
 
-function isNum(str) {
-    return /^\d+$/.test(str);
-}
+    function append(val) {
+      document.getElementById('calc').value += val;
+    }
 
-function simplify(a,b){
-if(a.length==b.length){
-flag=1;
-var t=0,gcd1=0,lcm1=0;
-for(j=0;j<a.length;j++){
-var n=a[j];
-var d=b[j];
-if(a[j]<b[j]){
-t=n;
-for(var i=1;i<=t;i++){
-    if(n%i==0 && d%i==0){
-        gcd1=n;
-        lcm1=d;
-        gcd1=parseInt(n/i);
-        lcm1=parseInt(d/i);}
-    if(i==t){
-        n=gcd1;
-        d=lcm1;}}
-}
-else if(a[j]>b[j]){
-t=d;
-for(var i=1;i<=t;i++){
-    if(n%i==0 && d%i==0){
-        gcd1=d;
-        lcm1=n;
-        lcm1=parseInt(n/i);
-        gcd1=parseInt(d/i);}
-    if(i==t){
-        d=gcd1;
-        n=lcm1;}}
-}
-else if(a[j]==b[j]){
-d=1;n=1;
-}
-a[j]=n;
-b[j]=d;
-}
-}
+    function clearAll() {
+      document.getElementById('calc').value = '';
+      arrn = [];
+      arrd = [];
+    }
 
-}
+    function isNum(str) {
+      return /^\d+$/.test(str);
+    }
 
-function GCDpush(ele){
-var y=document.getElementById(ele).value;
-y+=",";
-x=-1;
-for(i=0;i<y.length;i++){
-    if(y[i]=='/'){
-        for(j=i+1;j<y.length;j++){
-            if(y[j]==','){
-				var f=y.slice(x+1,i);
-				if(!isNum(f)){
-				document.getElementById("err").value="error in input";
-				return;
-				}
-                else arrn.push(parseInt(y.slice(x+1,i)));
-				f=y.slice(i+1,j);
-				if(!isNum(f)){
-				document.getElementById("err").value="error in input";
-				return;
-				}
-                else arrd.push(parseInt(y.slice(i+1,j)));
-                x=j;
-                break}
-            else continue;}}
-    else continue;}
-simplify(arrn,arrd);
-document.getElementById(ele).value='';}
+    function simplify(a, b) {
+      for (let i = 0; i < a.length; i++) {
+        let n = a[i];
+        let d = b[i];
+        let g = GCD(n, d);
+        a[i] = n / g;
+        b[i] = d / g;
+      }
+    }
 
-function GCD(...arr){
-var a=arr[0],b;
-for(var i=1;i<arr.length;i++){
-b=arr[i];
-while(b>0){
-var c=a%b;
-a=b;
-b=c;
-}
-}
-return a;
-}
-function LCM(a,b){
-var d=(a>b)?a:b;
-for(var i=d;true;i++)
-{
-if((i%a==0)&&(i%b==0))
-{
-return i;
-break;
-}
-}
-}
-function LCM1(...arr){
-if(arr.length==1){
-return arr[0];}
-if((arr.length%2)!=0)
-arr.push(arr[arr.length-1]);
-var arr2=new Array();
-for(var i=0;i<(arr.length-1);i=i+2)
-{
-var c=arr[i];
-var d=arr[i+1];
-arr2.push(LCM(c,d));
-}
-return LCM1(...arr2);
-}
-function display1(){
-var n=GCD(...arrn);
-var d=LCM1(...arrd);
-document.getElementById("calc").value="";
-var t=n,gcd1=0,lcm1=0;
-for(var i=1;i<=t;i++){
-    if(n%i==0 && d%i==0){
-        gcd1=n;
-        lcm1=d;
-        gcd1=parseInt(n/i);
-        lcm1=parseInt(d/i);}
-    if(i==t){
-        n=gcd1;
-        d=lcm1;}}
-document.getElementById("calc").value+=(n+"/"+d);
-}
-function display2(){
-var n=LCM1(...arrn);
-var d=GCD(...arrd);
-var t=d,gcd1=0,lcm1=0;
-for(var i=1;i<=t;i++){
-    if(n%i==0 && d%i==0){
-        gcd1=d;
-        lcm1=n;
-        lcm1=parseInt(n/i);
-        gcd1=parseInt(d/i);}
-    if(i==t){
-        d=gcd1;
-        n=lcm1;}}
-document.getElementById("calc").value="";
-document.getElementById("calc").value+=(n+"/"+d);
-}
-function clearAll(){
-document.getElementById("calc").value="";
-document.getElementById("err").value="";
-arrn=new Array();arrd=new Array();}
-</script>
+    function GCDpush() {
+      let y = document.getElementById('calc').value + ",";
+      let x = -1;
+      for (let i = 0; i < y.length; i++) {
+        if (y[i] == '/') {
+          for (let j = i + 1; j < y.length; j++) {
+            if (y[j] == ',') {
+              let num = y.slice(x + 1, i);
+              let den = y.slice(i + 1, j);
+              if (!isNum(num) || !isNum(den)) {
+                alert("Invalid input");
+                return;
+              }
+              arrn.push(parseInt(num));
+              arrd.push(parseInt(den));
+              x = j;
+              break;
+            }
+          }
+        }
+      }
+      simplify(arrn, arrd);
+      document.getElementById('calc').value = '';
+    }
+
+    function GCD(...arr) {
+      let a = arr[0];
+      for (let i = 1; i < arr.length; i++) {
+        let b = arr[i];
+        while (b > 0) {
+          let c = a % b;
+          a = b;
+          b = c;
+        }
+      }
+      return a;
+    }
+
+    function LCM(a, b) {
+      let max = (a > b) ? a : b;
+      while (true) {
+        if (max % a === 0 && max % b === 0) return max;
+        max++;
+      }
+    }
+
+    function LCM1(...arr) {
+      if (arr.length === 1) return arr[0];
+      if (arr.length % 2 !== 0) arr.push(arr[arr.length - 1]);
+      let temp = [];
+      for (let i = 0; i < arr.length - 1; i += 2) {
+        temp.push(LCM(arr[i], arr[i + 1]));
+      }
+      return LCM1(...temp);
+    }
+
+    function displayGCD() {
+      if (arrn.length === 0 || arrd.length === 0) return;
+      let n = GCD(...arrn);
+      let d = LCM1(...arrd);
+      let g = GCD(n, d);
+      document.getElementById('calc').value = (n / g) + "/" + (d / g);
+    }
+
+    function displayLCM() {
+      if (arrn.length === 0 || arrd.length === 0) return;
+      let n = LCM1(...arrn);
+      let d = GCD(...arrd);
+      let g = GCD(n, d);
+      document.getElementById('calc').value = (n / g) + "/" + (d / g);
+    }
+  </script>
 </body>
 </html>
