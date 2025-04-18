@@ -1,95 +1,95 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>CALCULATOR</title>
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="boot1css.css">
-
+  <meta charset="UTF-8">
+  <title>Simple Calculator</title>
   <style>
-    #calc {
-      background-color: orange;
-      padding: 10px;
-      color: darkblue;
-      border: 2px dashed goldenrod;
-	  font-size:40px;
-	  font-family:Monotype Corsiva;
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
     }
-    #calc:hover {
-      background-color: pink;
-      border: 2px solid yellow;
+    .calculator {
+      background-color: #d3d3d3;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
-    input[type="button"] {
-      padding: 10px;
-      margin: 5px;
-      color: white;
+    .display {
+      width: 100%;
+      height: 40px;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      text-align: right;
+      padding-right: 10px;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      grid-gap: 10px;
+    }
+    button {
+      height: 60px;
+      font-size: 1.2em;
       background-color: darkblue;
-      border: 1px solid goldenrod;
-      font-size: 30px;
-      font-family: Monotype Corsiva;
-      width: 70px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    input[type="button"]:hover {
-      border: 1px solid yellow;
-      color: darkgreen;
-      background-color: goldenrod;
+    button:hover {
+      background-color: navy;
     }
-    .col-md-6.col-sm-12 {
-      background-color: grey;
-    }
-	.calc-grid {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr); /* 5 columns */
-	gap: 10px;
-	justify-items: center;
-	background-color: lightgrey;
-	}
-
-
   </style>
 </head>
-<body class="container mt-5">
-
-  <!-- Back Button -->
-  <div class="mb-4">
-    <a href="index.html">
-      <input type="button" value="⇐" class="btn btn-secondary">
-    </a>
-  </div>
-
-  <!-- Calculator Form -->
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-sm-12">
-	<center>
-      <form name="form1" class="text-center p-3 border rounded bg-light shadow-sm">
-	  <input type="text" id="calc" name="answer" placeholder="Calculate" class="form-control text-center mb-3" readonly>
-	  <div class="calc-grid">
-          <input type="button" value="C" onclick="form1.answer.value=''" class="btn btn-danger">
-          <input type="button" value="1" onclick="form1.answer.value+=1">
-          <input type="button" value="2" onclick="form1.answer.value+=2">
-          <input type="button" value="3" onclick="form1.answer.value+=3">
-          <input type="button" value="+" onclick="form1.answer.value+='+'">
-
-          <input type="button" value="(" onclick="form1.answer.value+='('">
-          <input type="button" value="4" onclick="form1.answer.value+=4">
-          <input type="button" value="5" onclick="form1.answer.value+=5">
-          <input type="button" value="6" onclick="form1.answer.value+=6">
-          <input type="button" value="-" onclick="form1.answer.value+='-'">
-
-          <input type="button" value=")" onclick="form1.answer.value+=')'">
-          <input type="button" value="7" onclick="form1.answer.value+=7">
-          <input type="button" value="8" onclick="form1.answer.value+=8">
-          <input type="button" value="9" onclick="form1.answer.value+=9">
-          <input type="button" value="*" onclick="form1.answer.value+='*'">
-
-          <input type="button" value="=" onclick="form1.answer.value=eval(form1.answer.value)" class="btn btn-success">
-          <input type="button" value="M" onclick="form1.answer.value+='%'">
-          <input type="button" value="0" onclick="form1.answer.value+=0">
-          <input type="button" value="." onclick="form1.answer.value+='.'">
-          <input type="button" value="/" onclick="form1.answer.value+='/'">
-        </div>
-      </form>
-	  </center>
+<body>
+  <div class="calculator">
+    <input type="text" id="result" class="display" readonly>
+    <div class="buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="appendValue('(')">(</button>
+      <button onclick="appendValue(')')">)</button>
+      <button onclick="appendValue('+')">+</button>
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button onclick="appendValue('-')">-</button>
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button onclick="appendValue('*')">*</button>
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button onclick="appendValue('/')">/</button>
+      <button onclick="appendValue('.')">.</button>
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="memoryRecall()">M</button>
     </div>
   </div>
+
+  <script>
+    let memory = '';
+    function appendValue(val) {
+      document.getElementById('result').value += val;
+    }
+    function clearDisplay() {
+      document.getElementById('result').value = '';
+    }
+    function calculate() {
+      try {
+        document.getElementById('result').value = eval(document.getElementById('result').value);
+      } catch (e) {
+        alert('Invalid Expression');
+      }
+    }
+    function memoryRecall() {
+      document.getElementById('result').value += memory;
+    }
+  </script>
 </body>
 </html>
