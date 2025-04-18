@@ -1,0 +1,104 @@
+<html>
+<head>
+  <title>Calculator</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="boot1css.css">
+
+  <!-- Custom Styling -->
+  <style>
+    input, #rf1 {
+      padding: 10px;
+      margin: 10px;
+      color: white;
+      background-color: darkblue;
+      border: 1px solid goldenrod;
+      font-size: 40px;
+      font-family: Lucida Calligraphy;
+    }
+    input:hover, #rf1:hover {
+      border: 1px solid yellow;
+      color: darkgreen;
+      background-color: goldenrod;
+    }
+    p {
+      text-align: center;
+      font-family: Lucida Calligraphy;
+      font-size: 50px;
+      color: maroon;
+    }
+    #s, #g, #gf {
+      font-family: Lucida Calligraphy;
+      font-size: 30px;
+    }
+    #r3, #r1, #r2, #r4, #rf2, #rf3, #rf4 {
+      font-family: Lucida Calligraphy;
+      font-size: 23px;
+    }
+    #s, #r1 { color: blue; }
+    #gf { color: green; }
+    #g, #r2, #r3, #r4 { color: red; }
+    #rf2, #rf3, #rf4 { color: green; }
+    button {
+      padding: 10px;
+      margin: 10px;
+      color: white;
+      background-color: darkblue;
+      border: 1px solid goldenrod;
+      font-size: 23px;
+      font-family: Monotype Corsiva;
+    }
+	#b1{font-size: 23px;
+    font-family: Monotype Corsiva;}
+	#b2{font-size: 23px;
+    font-family: Monotype Corsiva;}
+    #b3{      font-size: 23px;
+    font-family: Monotype Corsiva;}
+  </style>
+</head>
+<body class="container mt-5">
+  <p class="text-center">CALCULATOR</p>
+  <br><br>
+
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <tr>
+        <td rowspan="2">
+          <a href="simple.html"><input id="b1" type="button" value="SIMPLE" class="btn btn-primary w-100"></a>
+        </td>
+        <td id="s" rowspan="2">BODMAS</td>
+        <td id="r1">You Know the Rules! Just follow them</td>
+      </tr>
+      <tr></tr>
+      <tr>
+        <td rowspan="3">
+          <a href="gcdlcm.html"><input type="button" id="b1" value="GCD & LCM" class="btn btn-primary w-100"></a>
+        </td>
+        <td id="g" rowspan="3">GCD and LCM of N numbers</td>
+        <td id="r2">Enter Fractions separated by commas(,)</td>
+      </tr>
+      <tr>
+        <td id="r3">Press <button class="btn btn-warning btn-sm">GCD</button> for GCD,
+          <button class="btn btn-warning btn-sm">LCM</button> for LCM</td>
+      </tr>
+      <tr>
+        <td id="r4">Press Clear when Done</td>
+      </tr>
+      <tr></tr>
+      <tr>
+        <td rowspan="3">
+          <a href="gcdlcmfrac.html"><button id="b1" class="btn btn-primary w-100">GCD & LCM<br>Fractions</button></a>
+        </td>
+        <td id="gf" rowspan="3">GCD and LCM of N Fractions</td>
+        <td id="rf2">Enter Fractions separated by commas(,)</td>
+      </tr>
+      <tr>
+        <td id="rf3">Press <button class="btn btn-warning btn-sm">GCD</button> for GCD,
+          <button class="btn btn-warning btn-sm">LCM</button> for LCM</td>
+      </tr>
+      <tr>
+        <td id="rf4">Press Clear when Done</td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

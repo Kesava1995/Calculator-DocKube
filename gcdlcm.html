@@ -1,0 +1,157 @@
+
+<html>
+<head>
+  <title>CALCULATOR</title>
+  <link rel="stylesheet" href="boot1css.css">
+  <style>
+    #calc {
+      background-color: orange;
+      padding: 10px;
+      color: darkblue;
+      border: 2px dashed goldenrod;
+      font-size: 40px;
+      font-family: Monotype Corsiva;
+    }
+    #calc:hover {
+      background-color: pink;
+      border: 2px solid yellow;
+    }
+	#b1,#b2,#b3,#b4{font-size: 25px;
+	padding:5px;}
+    input[type="button"] {
+      padding: 10px;
+      margin: 5px;
+      color: white;
+      background-color: darkblue;
+      border: 1px solid goldenrod;
+      font-size: 30px;
+      font-family: Monotype Corsiva;
+      width: 70px;
+    }
+	
+    input[type="button"]:hover {
+      border: 1px solid yellow;
+      color: darkgreen;
+      background-color: goldenrod;
+    }
+    .col-md-6.col-sm-12 {
+      background-color: grey;
+    }
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      justify-items: center;
+      background-color: lightgrey;
+    }
+  </style>
+</head>
+<body class="container mt-5">
+  <div class="mb-4">
+    <a href="index.html">
+      <input type="button" value="⇐" class="btn btn-secondary">
+    </a>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-12">
+      <center>
+        <form name="form1" class="text-center p-3 border rounded bg-light shadow-sm">
+          <input type="text" id="calc" name="answer" placeholder="Calculate" class="form-control text-center mb-3">
+          <div class="calc-grid">
+            <input type="button" value="1" onclick="form1.answer.value+=1">
+            <input type="button" value="2" onclick="form1.answer.value+=2">
+            <input type="button" value="3" onclick="form1.answer.value+=3">
+            <input type="button" id="b1" value="PUSH" onclick="GCDpush('calc')">
+            <input type="button" value="4" onclick="form1.answer.value+=4">
+            <input type="button" value="5" onclick="form1.answer.value+=5">
+            <input type="button" value="6" onclick="form1.answer.value+=6">
+            <input type="button" id="b2" value="GCD" onclick="display1()">
+            <input type="button" value="7" onclick="form1.answer.value+=7">
+            <input type="button" value="8" onclick="form1.answer.value+=8">
+            <input type="button" value="9" onclick="form1.answer.value+=9">
+            <input type="button" id="b3" value="LCM" onclick="display2()">
+            <input type="button" value="0" onclick="form1.answer.value+=0">
+            <input type="button" value="," onclick="form1.answer.value+=','">
+            <div></div>
+            <input type="button" id="b4" value="Clear" onclick="clearAll()" class="btn btn-danger">
+          </div>
+        </form>
+      </center>
+    </div>
+  </div>
+  <script>
+function isNum(str) {
+    return /^\d+$/.test(str);
+}
+var arr=new Array();
+function GCDpush(ele){
+var y=document.getElementById(ele).value+",";
+k=0;
+for(var i=0;i<y.length;i++){
+if(y[i]==",")
+{
+var f=y.slice(k,i);
+k=i+1;
+if(isNum(f))arr.push(f);
+else{
+document.getElementById("err").value="error in input";
+return;
+}
+}
+}
+console.log(arr);
+document.getElementById(ele).value='';
+}
+function GCD(...arr){
+var a=arr[0],b;
+for(var i=1;i<arr.length;i++){
+b=arr[i];
+while(b>0){
+var c=a%b;
+a=b;
+b=c;
+}
+}
+return a;
+}
+function LCM(a,b){
+var d=(a>b)?a:b;
+for(var i=d;true;i++)
+{
+if((i%a==0)&&(i%b==0))
+{
+return i;
+break;
+}
+}
+}
+function LCM1(...arr){
+if(arr.length==1){
+return arr[0];}
+if((arr.length%2)!=0)
+arr.push(arr[arr.length-1]);
+var arr2=new Array();
+for(var i=0;i<(arr.length-1);i=i+2)
+{
+var c=arr[i];
+var d=arr[i+1];
+arr2.push(LCM(c,d));
+}
+return LCM1(...arr2);
+}
+function display1(){
+var g=GCD(...arr);
+document.getElementById("calc").value="";
+document.getElementById("calc").value+=g;
+}
+function display2(){
+var g=LCM1(...arr);
+document.getElementById("calc").value="";
+document.getElementById("calc").value+=g;
+}
+function clearAll(){
+document.getElementById("calc").value="";
+arr=new Array();}
+</script>
+</body>
+</html>
