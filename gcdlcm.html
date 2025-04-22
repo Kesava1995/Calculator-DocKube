@@ -139,10 +139,11 @@
 
     function LCM(a, b) {
       let max = (a > b) ? a : b;
-      while (true) {
+      while (true && (a!=0 && b!=0)) {
         if (max % a === 0 && max % b === 0) return max;
         max++;
       }
+	  if(a!=0 || b!=0)return 0;
     }
 
     function LCM1(...arr) {
