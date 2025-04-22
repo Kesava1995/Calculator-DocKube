@@ -105,13 +105,16 @@
     }
     function calculate() {
       try {
-        document.getElementById('result').value = eval(document.getElementById('result').value);
+		memory="";
+		g= document.getElementById('result').value;
+        document.getElementById('result').value = eval(g);
+		memory += g;
       } catch (e) {
         alert('Invalid Expression');
       }
     }
     function memoryRecall() {
-      document.getElementById('result').value += memory;
+      document.getElementById('result').value = memory;
     }
   </script>
 </body>
