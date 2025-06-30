@@ -1,4 +1,4 @@
-**labsuser@master:~$ k get no
+labsuser@master:~$ k get no
 k: command not found
 labsuser@master:~$ alias k=kubectl
 labsuser@master:~$ k get no
@@ -94,4 +94,4 @@ NAME      STATUS   ROLES           AGE     VERSION   INTERNAL-IP     EXTERNAL-IP
 master    Ready    control-plane   3h36m   v1.30.4   172.31.24.15    <none>        Ubuntu 22.04.3 LTS   6.2.0-1013-aws   containerd://1.6.8
 worker1   Ready    <none>          3h34m   v1.30.4   172.31.22.181   <none>        Ubuntu 22.04.3 LTS   6.2.0-1013-aws   containerd://1.6.8
 worker2   Ready    <none>          3h34m   v1.30.4   172.31.23.248   <none>        Ubuntu 22.04.3 LTS   6.2.0-1013-aws   containerd://1.6.8
-labsuser@master:~/Calculator-DocKube$**
+labsuser@master:~/Calculator-DocKube$
