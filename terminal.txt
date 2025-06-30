@@ -95,3 +95,36 @@ master    Ready    control-plane   3h36m   v1.30.4   172.31.24.15    <none>     
 worker1   Ready    <none>          3h34m   v1.30.4   172.31.22.181   <none>        Ubuntu 22.04.3 LTS   6.2.0-1013-aws   containerd://1.6.8
 worker2   Ready    <none>          3h34m   v1.30.4   172.31.23.248   <none>        Ubuntu 22.04.3 LTS   6.2.0-1013-aws   containerd://1.6.8
 labsuser@master:~/Calculator-DocKube$
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+labsuser@master:~$ kubectl get svc calc-app-service
+NAME               TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+calc-app-service   NodePort   10.110.230.39   <none>        80:30080/TCP   6h53m
+labsuser@master:~$ kubectl get pods -o wide
+NAME                       READY   STATUS    RESTARTS   AGE   IP                NODE      NOMINATED NODE   READINESS GATES
+calc-app-c6b54549c-8k8cr   1/1     Running   0          73m   192.168.235.131   worker1   <none>           <none>
+calc-app-c6b54549c-hpkqb   1/1     Running   0          73m   192.168.219.73    master    <none>           <none>
+labsuser@master:~$ alias k=kubectl
+labsuser@master:~$ k get po
+NAME                       READY   STATUS    RESTARTS   AGE
+calc-app-c6b54549c-8k8cr   1/1     Running   0          70m
+calc-app-c6b54549c-hpkqb   1/1     Running   0          70m
+labsuser@master:~$ k get no -o wide
+NAME      STATUS   ROLES           AGE     VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION   CONTAINER-RUNTIME
+master    Ready    control-plane   7h16m   v1.30.4   172.31.24.15    <none>        Ubuntu 22.04.3 LTS   6.2.0-1013-aws   containerd://1.6.8
+worker1   Ready    <none>          7h14m   v1.30.4   172.31.22.181   <none>        Ubuntu 22.04.3 LTS   6.2.0-1013-aws   containerd://1.6.8
+worker2   Ready    <none>          7h13m   v1.30.4   172.31.23.248   <none>        Ubuntu 22.04.3 LTS   6.8.0-1030-aws   containerd://1.6.8
+labsuser@master:~$ for i in {1..10}; do curl http://10.110.230.39/hostname.txt; sleep 1; done
+Served by pod: calc-app-c6b54549c-8k8cr
+Served by pod: calc-app-c6b54549c-hpkqb
+Served by pod: calc-app-c6b54549c-8k8cr
+Served by pod: calc-app-c6b54549c-hpkqb
+Served by pod: calc-app-c6b54549c-8k8cr
+Served by pod: calc-app-c6b54549c-8k8cr
+Served by pod: calc-app-c6b54549c-8k8cr
+Served by pod: calc-app-c6b54549c-hpkqb
+Served by pod: calc-app-c6b54549c-hpkqb
+Served by pod: calc-app-c6b54549c-8k8cr
+labsuser@master:~$ 
