@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calc-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: calc-app
+  template:
+    metadata:
+      labels:
+        app: calc-app
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - calc-app
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: calc-app
+        image: phani1123/calc-app:latest
+        ports:
+        - containerPort: 80
